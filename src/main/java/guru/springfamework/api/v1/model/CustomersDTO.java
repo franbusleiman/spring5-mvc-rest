@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class CategoriesDTO {
+public class CustomersDTO {
 
-    List<CategoryDTO> categories;
+    List<CustomerDTO> customers;
 }

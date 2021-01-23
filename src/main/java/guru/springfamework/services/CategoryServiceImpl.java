@@ -2,6 +2,7 @@ package guru.springfamework.services;
 
 import guru.springfamework.api.v1.mappers.CategoryMapper;
 import guru.springfamework.api.v1.model.CategoryDTO;
+import guru.springfamework.domain.Category;
 import guru.springfamework.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,14 @@ public class CategoryServiceImpl implements CategoryService{
         CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(categoryRepository.findCategoryByName(name));
 
         return categoryDTO;
+    }
+
+    @Override
+    public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
+
+        Category category = categoryMapper.categoryDTOToCategory(categoryDTO);
+        Category categorySaved = categoryRepository.save(category);
+        return categoryMapper.categoryToCategoryDTO(categorySaved);
+
     }
 }

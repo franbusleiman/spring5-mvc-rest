@@ -1,7 +1,9 @@
 package guru.springfamework.bootstrapdata;
 
 import guru.springfamework.domain.Category;
+import guru.springfamework.domain.Customer;
 import guru.springfamework.repositories.CategoryRepository;
+import guru.springfamework.repositories.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +11,12 @@ import org.springframework.stereotype.Component;
 public class BootstrapData implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
+    private final CustomerRepository customerRepository;
 
-    public BootstrapData(CategoryRepository categoryRepository){
+    public BootstrapData(CategoryRepository categoryRepository, CustomerRepository customerRepository){
         this.categoryRepository = categoryRepository;
+        this.customerRepository = customerRepository;
+
     }
 
     @Override
@@ -34,6 +39,19 @@ public class BootstrapData implements CommandLineRunner {
         categoryRepository.save(exotic);
         categoryRepository.save(nuts);
 
+
+        Customer Tom = new Customer();
+        Tom.setFirstName("Tom");
+        Tom.setLastName("Bettiol");
+
+        Customer John = new Customer();
+        John.setFirstName("John");
+        John.setLastName("Thompson");
+
+        customerRepository.save(Tom);
+        customerRepository.save(John);
+
         System.out.println("Categories charged number: " + categoryRepository.count());
+        System.out.println("Customers charged number: " + customerRepository.count());
     }
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +23,8 @@ class CategoryServiceImplTest {
     CategoryRepository categoryRepository;
 
     CategoryService categoryService;
+
+    CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
 
     public static final String NAME = "fruits";
     public static final Long ID = 2L;
@@ -69,5 +72,29 @@ class CategoryServiceImplTest {
 
         assertEquals(NAME, categoryDTO.getName());
         assertEquals(ID, categoryDTO.getId());
+    }
+
+    @Test
+    void saveCategory(){
+
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setName(NAME);
+        categoryDTO.setId(ID);
+
+         Category category = categoryMapper.categoryDTOToCategory(categoryDTO);
+
+        when(categoryRepository.save(any())).thenReturn(category);
+
+        CategoryDTO category1 = categoryMapper.categoryToCategoryDTO(category);
+
+        CategoryDTO categorySaved = categoryService.saveCategory(categoryDTO);
+
+        assertEquals(categoryDTO.getId(), categorySaved.getId());
+
+
+
+
+
+
     }
 }
