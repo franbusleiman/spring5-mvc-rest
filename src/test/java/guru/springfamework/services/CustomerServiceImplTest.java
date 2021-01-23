@@ -72,7 +72,7 @@ class CustomerServiceImplTest {
 
         CustomerDTO customerDTO = customerService.getCustomerByName("John");
 
-        assertEquals(ID, customerDTO.getId());
+
         assertEquals(FIRSTNAME, customerDTO.getFirstName());
         assertEquals(LASTNAME, customerDTO.getLastName());
 
@@ -84,7 +84,7 @@ class CustomerServiceImplTest {
 
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(FIRSTNAME);
-        customerDTO.setId(ID);
+
 
         Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
 
@@ -94,6 +94,6 @@ class CustomerServiceImplTest {
 
         CustomerDTO customerDTO1 = customerService.saveCustomer(customerDTO);
 
-        Assertions.assertEquals(customerDTO.getId(), customerDTO1.getId());
+        Assertions.assertEquals(customerDTO.getFirstName(), customerDTO1.getFirstName());
     }
 }

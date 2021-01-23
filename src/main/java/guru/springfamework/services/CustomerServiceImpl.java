@@ -7,6 +7,7 @@ import guru.springfamework.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -44,4 +45,26 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.customerToCustomerDTO(customerSaved);
 
     }
+
+    @Override
+    public CustomerDTO updateCustomer(CustomerDTO customerDTO, Long id) {
+
+        Optional<Customer> customer = customerRepository.findById(id);
+
+        if(! customer.isPresent()){
+            return null;
+        }
+
+       Customer customerGet = customer.get();
+        customerGet.setId(id);
+
+        Customer customerSaved = customerRepository.save(customer.get());
+
+CustomerDTO customerDTO1 = customerMapper.customerToCustomerDTO(customerSaved);
+
+return customerDTO1;
+
+    }
+
+
 }

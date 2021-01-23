@@ -19,8 +19,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,10 +46,10 @@ class CustomerControllerTest {
     void getCustomers() throws Exception {
 
         CustomerDTO customer = new CustomerDTO();
-        customer.setId(1L);
+
 
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(2L);
+
 
         List<CustomerDTO> customerDTOList = new ArrayList<>();
         customerDTOList.add(customer);
@@ -67,7 +66,7 @@ class CustomerControllerTest {
     @Test
     void getCustomerByFirstName() throws Exception{
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(1L);
+
         customerDTO.setFirstName("John");
         customerDTO.setLastName("Cena");
 
@@ -94,4 +93,21 @@ class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("John")));
     }
+
+    @Test
+    void updateCustomer() throws Exception{
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Michael");
+        customerDTO.setLastName("Paul");
+
+        when(customerService.updateCustomer(any(), any())).thenReturn(customerDTO);
+
+        mockMvc.perform(put("/api/v1/customers/1")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(asJsonString(customerDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", equalTo("Michael")));
+    }
+
 }

@@ -9,4 +9,5 @@ public interface CustomerService {
     public List<CustomerDTO> listAllCustomers();
     public CustomerDTO getCustomerByName(String name);
     public CustomerDTO saveCustomer(CustomerDTO customerDTO);
+    public CustomerDTO updateCustomer(CustomerDTO customerDTO, Long id);
 }

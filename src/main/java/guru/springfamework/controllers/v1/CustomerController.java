@@ -24,7 +24,7 @@ public class CustomerController {
             return new ResponseEntity<CustomersDTO>(new CustomersDTO(customerService.listAllCustomers()), HttpStatus.OK);
         }
 
-        @GetMapping("/" + "{firstName}")
+        @GetMapping("/{firstName}")
     public ResponseEntity<CustomerDTO> getCustomerByFirstName(@PathVariable String firstName){
 
 
@@ -36,6 +36,12 @@ public class CustomerController {
 
         return new ResponseEntity<CustomerDTO>(customerService.saveCustomer(customerDTO), HttpStatus.OK);
 
+}
+
+@PutMapping("/{id}")
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable int id, @RequestBody CustomerDTO customerDTO){
+
+        return new ResponseEntity<CustomerDTO>(customerService.updateCustomer(customerDTO, Long.valueOf(id)), HttpStatus.OK);
 }
 
 
